@@ -206,9 +206,17 @@ void parse(char * line) {
   }
   */
   if (del == '|'){
-    redirect(a, ".temp");
-    aredirect(b, ".temp");
-    execlp("rm","rm",".temp",NULL);
+    int pid;
+    pid = fork();
+    if (pid) {
+      wait(0);
+    }
+    else {
+      redirect(a, ".temp");
+      aredirect(b, ".temp");
+      execlp("rm","rm",".temp",NULL);
+      exit(0);
+    }
     return;
   }
   
